@@ -1,3 +1,15 @@
-ng generate component appointment-list
+ng new projectName
 
-ng generate interface models/appointment# angular-test-apps
+ng serve
+
+ng serve --open
+
+ng generate component componentName
+
+ng generate interface models/appointment
+
+ng generate service serviceName
+
+ng build
+
+ng update
