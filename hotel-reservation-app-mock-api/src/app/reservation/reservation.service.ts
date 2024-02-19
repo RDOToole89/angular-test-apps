@@ -11,36 +11,33 @@ export class ReservationService {
   private apiUrl = 'http://localhost:3001';
   private reservations: Reservation[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Observable is a design pattern that allows us to subscribe to an event and respond to it when it occurs.
   getReservations(): Observable<Reservation[]> {
 
-   return this.http.get<Reservation[]>(`${this.apiUrl}/reservations`)
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations`)
   }
 
-  getReservation(id: string): Reservation | undefined {
-    return this.reservations.find(res => res.id === id);
+  getReservation(id: string): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservation/${id}`)
   }
 
-  addReservation(reservation: Reservation): void {
+  addReservation(reservation: Reservation): Observable<void> {
 
-    reservation.id = Date.now().toString();
+    return this.http.post<void>(`${this.apiUrl}/reservation`, reservation);
 
-    this.reservations.push(reservation);
-   
   }
 
-  deleteReservation(id: string): void {
-    let index = this.reservations.findIndex(res => res.id === id);
-    this.reservations.splice(index,1)
-    
+  deleteReservation(id: string): Observable<void> {
+
+    return this.http.delete<void>(`${this.apiUrl}/reservation/${id}`);
+
   }
 
-  updateReservation(id: string, updatedReservation: Reservation): void {
-    let index = this.reservations.findIndex(res => res.id === id);
-    this.reservations[index] = updatedReservation;
-  
+  updateReservation(id: string, updatedReservation: Reservation): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/reservation/${id}`, updatedReservation);
+
   }
-  
+
 }
