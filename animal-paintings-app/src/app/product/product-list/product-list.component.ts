@@ -4,7 +4,6 @@ import { Product } from '../../models/product';
 import { CartService } from '../../cart/cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -14,6 +13,7 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  sortOrder: string = '';
 
   constructor(private productService: ProductService,
     private cartService: CartService, private snackbar: MatSnackBar) { }
@@ -41,5 +41,17 @@ export class ProductListComponent implements OnInit {
       const name = product.name.toLowerCase();
       return name.includes(searchTerm);
     });
+
+    this.sortProducts(this.sortOrder);
+  }
+
+  sortProducts(sortValue: string): void {
+    this.sortOrder = sortValue;
+
+    if(this.sortOrder === 'priceLowHigh') {
+      this.filteredProducts = this.filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (this.sortOrder === 'priceHighLow') {
+      this.filteredProducts = this.filteredProducts.sort((a, b) => b.price - a.price);
+    }
   }
 }
