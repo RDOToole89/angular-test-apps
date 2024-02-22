@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { BookListComponent } from './book-list/book-list.component';
 import { AppState } from './app.state';
+import { EffectsModule } from '@ngrx/effects';
+import { BookEffects } from './books/book.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,10 @@ import { AppState } from './app.state';
     AppRoutingModule,
     // The StoreModule.forRoot function is used to register the BookReducer with the NgRx Store. The BookReducer is the reducer that takes care of the book state.
     StoreModule.forRoot<AppState>({book: BookReducer}),
+    // The EffectsModule.forRoot function is used to register the BookEffects with the NgRx Effects.
+    EffectsModule.forRoot([BookEffects]),
+    //  The StoreDevtoolsModule.instrument function is used to enable the NgRx DevTools.
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]
